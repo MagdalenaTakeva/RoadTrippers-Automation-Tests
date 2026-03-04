@@ -1,0 +1,651 @@
+2026-03-03 17:31:23 - DEBUG - [UnknownTest] [MyTripsPage] BasePage initialized
+2026-03-03 17:31:23 - DEBUG - [UnknownTest] [TripPlannerPage] BasePage initialized
+2026-03-03 17:31:23 - DEBUG - [UnknownTest] [HomePage] BasePage initialized
+2026-03-03 17:31:23 - DEBUG - [UnknownTest] [HomePage] Navigating to Home Page: https://roadtrippers.com
+2026-03-03 17:31:23 - DEBUG - [UnknownTest] [HomePage] Opening page: https://roadtrippers.com
+2026-03-03 17:31:26 - DEBUG - [UnknownTest] [HomePage] Waiting for page to load completely with timeout 30s
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Page loaded completely.
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Successfully opened page https://roadtrippers.com
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] wait_until_page_ready started (timeout=30s, watching 2 locators)
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] handle_overlays started (max 5.0s)
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Finding all elements: ('xpath', "//button[contains(@onclick,'message.dismiss')]")
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")>
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")>
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")> to be visible
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")> is visible
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")> is visible
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")>
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.7")>
+2026-03-03 17:31:27 - INFO - [UnknownTest] [HomePage] Dismissed Gist dismiss button inside iframe via js_click
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")>
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")>
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")> to be visible
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")> is visible
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")> is visible
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")>
+2026-03-03 17:31:27 - DEBUG - [UnknownTest] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.BFE2FBC356270A13916C64277FB8D7F6.d.72EDCA576A2DB7B4234FDDE8418FBB0A.e.8")>
+2026-03-03 17:31:27 - INFO - [UnknownTest] [HomePage] Dismissed Gist dismiss button inside iframe via js_click
+2026-03-03 17:31:27 - INFO - [UnknownTest] [HomePage] Dismissed Gist button inside iframe
+2026-03-03 17:31:27 - INFO - [UnknownTest] [HomePage] Removed Gist overlay wrapper (#gist-overlay)
+2026-03-03 17:31:28 - DEBUG - [UnknownTest] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:31:30 - ERROR - [UnknownTest] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:31:30 - DEBUG - [UnknownTest] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:31:32 - ERROR - [UnknownTest] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:31:32 - DEBUG - [UnknownTest] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")>
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")>
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")> to be visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")> is visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")> is visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")>
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="d991032ca3bb429d5a162ce9c40804b2", element="f.ABB1EBE39303D210FFCFA19B24F97D69.d.A8E34C5FFE4F6D6E16F0AC30E3C60D71.e.129")>
+2026-03-03 17:31:33 - INFO - [UnknownTest] [HomePage] Dismissed cookie consent banner via js_click
+2026-03-03 17:31:33 - INFO - [UnknownTest] [HomePage] Dismissed cookie consent banner
+2026-03-03 17:31:33 - INFO - [UnknownTest] [HomePage] handle_overlays finished — at least one overlay was dismissed
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_from') to be visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Element ('css selector', 'input.search__input.search_input_from') is visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_to') to be visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Element ('css selector', 'input.search__input.search_input_to') is visible
+2026-03-03 17:31:33 - INFO - [UnknownTest] [HomePage] Page ready condition met — all main locators visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Home page ready: search form visible
+2026-03-03 17:31:33 - DEBUG - [UnknownTest] [HomePage] Opening domain before injecting cookies
+2026-03-03 17:35:23 - DEBUG - [UnknownTest] [HomePage] BasePage initialized
+2026-03-03 17:35:23 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Navigating to Home Page: https://roadtrippers.com
+2026-03-03 17:35:23 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Opening page: https://roadtrippers.com
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for page to load completely with timeout 30s
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Page loaded completely.
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully opened page https://roadtrippers.com
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] wait_until_page_ready started (timeout=30s, watching 2 locators)
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] handle_overlays started (max 5.0s)
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding all elements: ('xpath', "//button[contains(@onclick,'message.dismiss')]")
+2026-03-03 17:35:25 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")>
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")>
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")> to be visible
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")> is visible
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")> is visible
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")>
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.7")>
+2026-03-03 17:35:26 - INFO - [test_partial_start_selects_suggestion] [HomePage] Dismissed Gist dismiss button inside iframe via js_click
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")>
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")>
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")> to be visible
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")> is visible
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")> is visible
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")>
+2026-03-03 17:35:26 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.41BBA098736EAC8BB553DC8C4AEE9834.d.F3E0A1D9CB7B78CFAE42A3D75376EE56.e.8")>
+2026-03-03 17:35:26 - INFO - [test_partial_start_selects_suggestion] [HomePage] Dismissed Gist dismiss button inside iframe via js_click
+2026-03-03 17:35:26 - INFO - [test_partial_start_selects_suggestion] [HomePage] Dismissed Gist button inside iframe
+2026-03-03 17:35:26 - INFO - [test_partial_start_selects_suggestion] [HomePage] Removed Gist overlay wrapper (#gist-overlay)
+2026-03-03 17:35:27 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:35:29 - ERROR - [test_partial_start_selects_suggestion] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:29 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:35:31 - ERROR - [test_partial_start_selects_suggestion] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")>
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")>
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")> to be visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")> is visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")> is visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")>
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.162")>
+2026-03-03 17:35:31 - INFO - [test_partial_start_selects_suggestion] [HomePage] Dismissed cookie consent banner via js_click
+2026-03-03 17:35:31 - INFO - [test_partial_start_selects_suggestion] [HomePage] Dismissed cookie consent banner
+2026-03-03 17:35:31 - INFO - [test_partial_start_selects_suggestion] [HomePage] handle_overlays finished — at least one overlay was dismissed
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_from') to be visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element ('css selector', 'input.search__input.search_input_from') is visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_to') to be visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element ('css selector', 'input.search__input.search_input_to') is visible
+2026-03-03 17:35:31 - INFO - [test_partial_start_selects_suggestion] [HomePage] Page ready condition met — all main locators visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Home page ready: search form visible
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Entering Start location: Chi
+2026-03-03 17:35:31 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] handle_overlays started (max 15.0s)
+2026-03-03 17:35:31 - INFO - [test_partial_start_selects_suggestion] [HomePage] Removed Gist background layer
+2026-03-03 17:35:32 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:35:34 - ERROR - [test_partial_start_selects_suggestion] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:34 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:35:36 - ERROR - [test_partial_start_selects_suggestion] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:36 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:35:37 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:35:39 - ERROR - [test_partial_start_selects_suggestion] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:39 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:35:41 - ERROR - [test_partial_start_selects_suggestion] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] No overlays dismissed this iteration — exiting loop
+2026-03-03 17:35:41 - INFO - [test_partial_start_selects_suggestion] [HomePage] handle_overlays finished — at least one overlay was dismissed
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Sending keys to ('css selector', 'input.search__input.search_input_from'): Chi
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Attempt 1/3 – sending keys to ('css selector', 'input.search__input.search_input_from'): Chi
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_from') to be clickable with timeout 12s
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")>
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")> to be visible
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")> is visible
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")> is visible
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")>
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element ('css selector', 'input.search__input.search_input_from') is now clickable
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")>
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")> to be visible
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")> is visible
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")> is visible
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="fda09fe3170cb370ac2d5913bf3b416c", element="f.2F48B2C54466652F97C9AD9378C91675.d.0D9DAEFCF79381AD8B211741E743B7D2.e.72")>
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Successfully sent keys to ('css selector', 'input.search__input.search_input_from')
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Start input updated, waiting for autocomplete container
+2026-03-03 17:35:41 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Waiting for element ('css selector', '.search__autocomplete.search_autocomplete_from') to be visible
+2026-03-03 17:35:42 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Element ('css selector', '.search__autocomplete.search_autocomplete_from') is visible
+2026-03-03 17:35:42 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Start autocomplete container visible
+2026-03-03 17:35:42 - DEBUG - [test_partial_start_selects_suggestion] [HomePage] Start location Chi selected from autocomplete
+2026-03-03 17:35:46 - DEBUG - [UnknownTest] [HomePage] BasePage initialized
+2026-03-03 17:35:46 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Navigating to Home Page: https://roadtrippers.com
+2026-03-03 17:35:46 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Opening page: https://roadtrippers.com
+2026-03-03 17:35:48 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for page to load completely with timeout 30s
+2026-03-03 17:35:49 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Page loaded completely.
+2026-03-03 17:35:49 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Successfully opened page https://roadtrippers.com
+2026-03-03 17:35:49 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] wait_until_page_ready started (timeout=30s, watching 2 locators)
+2026-03-03 17:35:49 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] handle_overlays started (max 5.0s)
+2026-03-03 17:35:49 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding all elements: ('xpath', "//button[contains(@onclick,'message.dismiss')]")
+2026-03-03 17:35:49 - INFO - [test_partial_destination_selects_suggestion] [HomePage] Removed Gist background layer
+2026-03-03 17:35:50 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:35:52 - ERROR - [test_partial_destination_selects_suggestion] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:52 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:35:54 - ERROR - [test_partial_destination_selects_suggestion] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")>
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")>
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")> to be visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")> is visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")> is visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")>
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.151")>
+2026-03-03 17:35:54 - INFO - [test_partial_destination_selects_suggestion] [HomePage] Dismissed cookie consent banner via js_click
+2026-03-03 17:35:54 - INFO - [test_partial_destination_selects_suggestion] [HomePage] Dismissed cookie consent banner
+2026-03-03 17:35:54 - INFO - [test_partial_destination_selects_suggestion] [HomePage] handle_overlays finished — at least one overlay was dismissed
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_from') to be visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element ('css selector', 'input.search__input.search_input_from') is visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_to') to be visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element ('css selector', 'input.search__input.search_input_to') is visible
+2026-03-03 17:35:54 - INFO - [test_partial_destination_selects_suggestion] [HomePage] Page ready condition met — all main locators visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Home page ready: search form visible
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Entering Destination location: New
+2026-03-03 17:35:54 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] handle_overlays started (max 15.0s)
+2026-03-03 17:35:54 - INFO - [test_partial_destination_selects_suggestion] [HomePage] Removed Gist background layer
+2026-03-03 17:35:55 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:35:58 - ERROR - [test_partial_destination_selects_suggestion] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:35:58 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:36:00 - ERROR - [test_partial_destination_selects_suggestion] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:36:00 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:36:00 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 17:36:02 - ERROR - [test_partial_destination_selects_suggestion] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:36:02 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 17:36:04 - ERROR - [test_partial_destination_selects_suggestion] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] No overlays dismissed this iteration — exiting loop
+2026-03-03 17:36:04 - INFO - [test_partial_destination_selects_suggestion] [HomePage] handle_overlays finished — at least one overlay was dismissed
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Sending keys to ('css selector', 'input.search__input.search_input_to'): New
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Attempt 1/3 – sending keys to ('css selector', 'input.search__input.search_input_to'): New
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_to') to be clickable with timeout 12s
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")>
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")> to be visible
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")> is visible
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")> is visible
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")>
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element ('css selector', 'input.search__input.search_input_to') is now clickable
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")>
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")> to be visible
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")> is visible
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")> is visible
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="04b147997f1f5643872216e188d6ad28", element="f.91DFFB1DF2AFD71BEA2C20BC00F1B90E.d.71D27CB690A087A3E1B9E3F691863040.e.83")>
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Successfully sent keys to ('css selector', 'input.search__input.search_input_to')
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Destination input updated, waiting for autocomplete container
+2026-03-03 17:36:04 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Waiting for element ('css selector', '.search__autocomplete.search_autocomplete_to') to be visible
+2026-03-03 17:36:05 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Element ('css selector', '.search__autocomplete.search_autocomplete_to') is visible
+2026-03-03 17:36:05 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Destination autocomplete container visible
+2026-03-03 17:36:05 - DEBUG - [test_partial_destination_selects_suggestion] [HomePage] Destination location New selected from autocomplete
+2026-03-03 18:45:49 - DEBUG - [UnknownTest] [MyTripsPage] BasePage initialized
+2026-03-03 18:45:49 - DEBUG - [UnknownTest] [TripPlannerPage] BasePage initialized
+2026-03-03 18:45:49 - DEBUG - [UnknownTest] [HomePage] BasePage initialized
+2026-03-03 18:45:49 - DEBUG - [UnknownTest] [HomePage] Navigating to Home Page: https://roadtrippers.com
+2026-03-03 18:45:49 - DEBUG - [UnknownTest] [HomePage] Opening page: https://roadtrippers.com
+2026-03-03 18:45:52 - DEBUG - [UnknownTest] [HomePage] Waiting for page to load completely with timeout 30s
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Page loaded completely.
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Successfully opened page https://roadtrippers.com
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] wait_until_page_ready started (timeout=30s, watching 2 locators)
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] handle_overlays started (max 5.0s)
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Finding all elements: ('xpath', "//button[contains(@onclick,'message.dismiss')]")
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")>
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")>
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")> to be visible
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")> is visible
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")> is visible
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")>
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.7")>
+2026-03-03 18:45:53 - INFO - [UnknownTest] [HomePage] Dismissed Gist dismiss button inside iframe via js_click
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")>
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")>
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")> to be visible
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")> is visible
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")> is visible
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")>
+2026-03-03 18:45:53 - DEBUG - [UnknownTest] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.0D2ACB725B84E1708AF36DF41F20F1C3.d.AAD6168713FCDCAB2178AEB1BEB475F9.e.8")>
+2026-03-03 18:45:53 - INFO - [UnknownTest] [HomePage] Dismissed Gist dismiss button inside iframe via js_click
+2026-03-03 18:45:53 - INFO - [UnknownTest] [HomePage] Dismissed Gist button inside iframe
+2026-03-03 18:45:53 - INFO - [UnknownTest] [HomePage] Removed Gist overlay wrapper (#gist-overlay)
+2026-03-03 18:45:54 - DEBUG - [UnknownTest] [HomePage] Finding element: ('css selector', "button[data-sweetchuck-id='modal__button--close']")
+2026-03-03 18:45:56 - ERROR - [UnknownTest] [HomePage] Failed to find element ('css selector', "button[data-sweetchuck-id='modal__button--close']"): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 18:45:56 - DEBUG - [UnknownTest] [HomePage] Finding element: ('css selector', 'div.c1iayu8k.chcmyku > button')
+2026-03-03 18:45:58 - ERROR - [UnknownTest] [HomePage] Failed to find element ('css selector', 'div.c1iayu8k.chcmyku > button'): Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x9f7dd3
+	0x9f7e14
+	0x801db0
+	0x84c20a
+	0x84c4ab
+	0x88de32
+	0x86ea84
+	0x88b621
+	0x86e7d6
+	0x840049
+	0x840e04
+	0xc56924
+	0xc51bf7
+	0xc6f5a0
+	0xa10f58
+	0xa1891d
+	0xa00648
+	0xa00812
+	0x9ea21a
+	0x75915d49
+	0x7705d83b
+	0x7705d7c1
+
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Finding element: ('id', 'onetrust-accept-btn-handler')
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Performing JS click on <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")>
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Scrolling to element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")>
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Waiting for element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")> to be visible
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")> is visible
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")> is visible
+2026-03-03 18:45:58 - DEBUG - [UnknownTest] [HomePage] Successfully scrolled to element <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")>
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] JS click executed successfully on <selenium.webdriver.remote.webelement.WebElement (session="671555203063b0a23a7bbcab04c68ca1", element="f.265F0F9616E28809CD56E68EFC854BE9.d.F27FFF7B1043DFF67C72D0D7EB6C62A8.e.130")>
+2026-03-03 18:45:59 - INFO - [UnknownTest] [HomePage] Dismissed cookie consent banner via js_click
+2026-03-03 18:45:59 - INFO - [UnknownTest] [HomePage] Dismissed cookie consent banner
+2026-03-03 18:45:59 - INFO - [UnknownTest] [HomePage] handle_overlays finished — at least one overlay was dismissed
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_from') to be visible
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] Element ('css selector', 'input.search__input.search_input_from') is visible
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] Waiting for element ('css selector', 'input.search__input.search_input_to') to be visible
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] Element ('css selector', 'input.search__input.search_input_to') is visible
+2026-03-03 18:45:59 - INFO - [UnknownTest] [HomePage] Page ready condition met — all main locators visible
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] Home page ready: search form visible
+2026-03-03 18:45:59 - DEBUG - [UnknownTest] [HomePage] Opening domain before injecting cookies

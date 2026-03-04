@@ -1,0 +1,129 @@
+# ============================================================
+# CircleCI Configuration – Selenium + Pytest (Selective Parallelism)
+# ------------------------------------------------------------
+# Strategy:
+#   • Stateless tests (no shared user state) → run in parallel
+#   • Authenticated/stateful tests → run sequentially
+#
+# Rationale:
+#   Prevents race conditions when multiple tests share
+#   a logged-in account or mutate shared data.
+#
+# Outcome:
+#   Stable CI + optimized execution time.
+# ============================================================
+
+version: 2.1
+
+
+jobs:
+  test:
+    docker:
+      # Python image with Chrome & Firefox pre-installed
+      - image: cimg/python:3.11-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      # --------------------------------------------
+      # Checkout source code
+      # --------------------------------------------
+      - checkout
+
+      # --------------------------------------------
+      # Restore dependency cache
+      # --------------------------------------------
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "requirements.txt" }}
+            - v1-deps-
+
+      # --------------------------------------------
+      # Install dependencies inside virtualenv
+      # --------------------------------------------
+      - run:
+          name: Install Dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+      # --------------------------------------------
+      # Cache virtual environment
+      # --------------------------------------------
+      - save_cache:
+          paths:
+            - venv
+          key: v1-deps-{{ checksum "requirements.txt" }}
+
+      # --------------------------------------------
+      # Run Stateless Tests (Parallel)
+      # --------------------------------------------
+      - run:
+          name: Run Stateless Tests (Parallel)
+          command: |
+            . venv/bin/activate
+            mkdir -p reports screenshots
+
+            # Execute tests NOT marked as "auth"
+            # -n auto → parallel execution
+            # --reruns 1 → retry once for flake mitigation
+            pytest \
+              -m "not auth" \
+              -n auto \
+              --reruns 1 \
+              --junitxml=reports/junit-stateless.xml \
+              --html=reports/stateless-report.html \
+              --self-contained-html
+
+      # --------------------------------------------
+      # Run Authenticated Tests (Sequential)
+      # --------------------------------------------
+      - run:
+          name: Run Authenticated Tests (Sequential)
+          command: |
+            . venv/bin/activate
+
+            # Execute only tests marked as "auth"
+            # -n 1 → single worker (no parallelism)
+            pytest \
+              -m "auth" \
+              -n 1 \
+              --reruns 1 \
+              --junitxml=reports/junit-auth.xml \
+              --html=reports/auth-report.html \
+              --self-contained-html
+
+      # --------------------------------------------
+      # Store Structured Test Results (JUnit XML)
+      # --------------------------------------------
+      - store_test_results:
+          path: reports
+
+      # --------------------------------------------
+      # Store HTML Reports as Artifacts
+      # --------------------------------------------
+      - store_artifacts:
+          path: reports
+          destination: test-reports
+
+      # --------------------------------------------
+      # Store Failure Screenshots
+      # --------------------------------------------
+      - store_artifacts:
+          path: screenshots
+          destination: failure-screenshots
+
+
+# ============================================================
+# Workflow Definition
+# ------------------------------------------------------------
+# Executes the test job on every branch build / PR.
+# ============================================================
+
+workflows:
+  version: 2
+  pull_request_pipeline:
+    jobs:
+      - test

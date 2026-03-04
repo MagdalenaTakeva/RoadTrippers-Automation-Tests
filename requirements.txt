@@ -1,0 +1,25 @@
+# Core testing & automation
+pytest==9.0.2                  # Latest stable (Dec 2025 release, still current in Mar 2026)
+selenium==4.41.0               # Latest stable (Feb 2026)
+webdriver-manager==4.0.2       # No newer release since mid-2024; still excellent & compatible
+
+# Reporting & HTML output
+pytest-html==4.2.0             # Latest (Jan 2026)
+pytest-cov==7.0.0              # Latest (Sep 2025, still current)
+
+# Parallel execution & reruns
+pytest-xdist==3.6.1            # Latest stable (no major newer release visible; 3.6.1 is safe & widely used)
+pytest-rerunfailures==14.0     # Still current & stable
+
+# Image/screenshot validation (PIL)
+Pillow==11.1.0                 # Latest (no change needed)
+
+# Optional but highly recommended additions
+factory-boy==3.3.3             # Good choice for factories (e.g. LocationFactory); still current
+python-dotenv==1.0.1           # Perfect for .env handling (secrets, base URLs, test users)
+allure-pytest==2.13.5          # Nice dashboards if you want Allure (still maintained)
+
+# Very useful extras for Selenium + pytest (add if needed)
+# pytest-selenium==4.0.0       # If you want @pytest.mark optional Selenium fixtures
+# requests==2.32.3             # For API checks mixed with UI tests
+# faker==37.0.0                # Great fake data generator (pairs well with factory-boy)

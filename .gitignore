@@ -1,0 +1,37 @@
+# Python venv & caches
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+pip-wheel-metadata/
+.pytest_cache/
+
+# PyCharm/IDEA
+.idea/
+
+# Secrets & credentials
+.env
+.env.*
+roadtrippers_cookies.pkl
+*.pkl
+cookies.*
+secrets.*
+credentials.*
+*.key
+*.pem
+id_rsa
+id_ed25519
+
+# Logs & reports
+logs/
+reports/
+htmlcov/
+allure-results/
+screenshots/
+
+# OS junk
+.DS_Store
+Thumbs.db
