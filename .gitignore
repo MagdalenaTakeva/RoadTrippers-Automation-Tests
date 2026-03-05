@@ -9,10 +9,10 @@ __pycache__/
 pip-wheel-metadata/
 .pytest_cache/
 
-# PyCharm/IDEA
+# PyCharm / IDEA
 .idea/
 
-# Secrets & credentials
+# Secrets & credentials (never commit these!)
 .env
 .env.*
 roadtrippers_cookies.pkl
@@ -25,13 +25,20 @@ credentials.*
 id_rsa
 id_ed25519
 
-# Logs & reports
+# Logs, reports & temp output (ignore all logs and report dirs)
 logs/
+*.log
 reports/
 htmlcov/
 allure-results/
 screenshots/
+coverage_html/
 
-# OS junk
+# OS-generated junk
 .DS_Store
-Thumbs.dblogs.log
+Thumbs.db
+
+# Misc temp files from editors/tools
+*.swp
+*.swo
+*~
