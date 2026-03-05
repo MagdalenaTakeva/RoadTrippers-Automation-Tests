@@ -1,4 +1,4 @@
-# Python venv & caches
+# Python virtual environments & caches
 .venv/
 __pycache__/
 *.pyc
@@ -9,10 +9,10 @@ __pycache__/
 pip-wheel-metadata/
 .pytest_cache/
 
-# PyCharm / IDEA
+# PyCharm / IntelliJ IDEA
 .idea/
 
-# Secrets & credentials (never commit these!)
+# Secrets & credentials – NEVER commit these!
 .env
 .env.*
 roadtrippers_cookies.pkl
@@ -25,7 +25,7 @@ credentials.*
 id_rsa
 id_ed25519
 
-# Logs, reports & temp output (ignore all logs and report dirs)
+# Logs, reports, coverage & temporary test output
 logs/
 *.log
 reports/
@@ -33,12 +33,16 @@ htmlcov/
 allure-results/
 screenshots/
 coverage_html/
+.coverage               # pytest-cov raw data
+coverage.xml            # coverage XML report
+.coverage.*
 
-# OS-generated junk
+# OS-generated junk files
 .DS_Store
 Thumbs.db
 
-# Misc temp files from editors/tools
+# Editor & tool temporary files
 *.swp
 *.swo
-*~
+*~.coverage
+.coverage.*

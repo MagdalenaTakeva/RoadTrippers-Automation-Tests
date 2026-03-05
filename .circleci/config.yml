@@ -1,20 +1,16 @@
 # ============================================================
 # CircleCI Configuration – Selenium + Pytest Pipeline
 # ============================================================
-# This pipeline runs all UI tests for the RoadTrippers project on every push/PR.
+# Debug-focused version to fix "collected 0 items" issue
+# Goal: Prove if tests/ folder and *_tests.py files arrive in CI workspace
+# If files are missing → checkout problem
+# If files present but 0 collected → pytest discovery issue
 #
-# Current Goal:
-#   - Fix 0 tests collected issue (likely discovery or file path problem)
-#   - Run all tests (stateless + auth) with verbose output
-#   - Generate coverage report (HTML) for quality proof
-#   - Store reports, coverage, and screenshots as downloadable artifacts
-#
-# Key Changes in this version:
-#   - Removed -n (parallelism) temporarily → ensures stable discovery
-#   - Added debug steps: list files, run --collect-only
-#   - Kept cookie decode from COOKIES_BASE64 secret
-#   - 30m no_output_timeout → prevents silent kills
-#   - Coverage via pytest-cov → HTML report in artifacts
+# Steps:
+# 1. Force full checkout (no shallow clone)
+# 2. Debug workspace: list all files, check tests/ existence
+# 3. Debug collection: run --collect-only from root
+# 4. Debug forced collection: run --collect-only from tests/
 #
 # Author: Magdalena Takeva – interview project (March 2026)
 # ============================================================
@@ -24,112 +20,60 @@ version: 2.1
 jobs:
   test:
     docker:
-      # Official CircleCI image with Python 3.11 + Chrome + Firefox pre-installed
       - image: cimg/python:3.11-browsers
 
     working_directory: ~/repo
 
     steps:
-      # Step 1: Checkout your code from GitHub
-      - checkout
+      # Step 1: Force full checkout (fetch all history, no shallow)
+      - checkout:
+          fetch_depth: 0
 
-      # Step 2: Restore cached dependencies (speeds up repeated builds)
-      - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "requirements.txt" }}
-            - v1-deps-
-
-      # Step 3: Create venv + install dependencies (including pytest-cov)
+      # Step 2: DEBUG – Prove files arrived in CI workspace
       - run:
-          name: Install Python Dependencies
+          name: DEBUG – Workspace & File Presence
+          command: |
+            echo "=== CURRENT WORKING DIRECTORY ==="
+            pwd
+            echo ""
+            echo "=== GIT TRACKED FILES (git ls-files | grep tests) ==="
+            git ls-files | grep tests || echo "No tests files tracked!"
+            echo ""
+            echo "=== FULL RECURSIVE FILE LIST (find . | grep tests) ==="
+            find . -type f | grep tests || echo "No tests files found in workspace"
+            echo ""
+            echo "=== DOES tests/ FOLDER EXIST? ==="
+            if [ -d "tests" ]; then
+              echo "YES - tests/ exists"
+              echo "Contents of tests/:"
+              ls -la tests/
+            else
+              echo "NO - tests/ MISSING after checkout!"
+            fi
+            echo ""
+            echo "=== FILES MATCHING *_tests.py ==="
+            find . -name "*_tests.py" 2>/dev/null || echo "No *_tests.py files found"
+            echo ""
+            echo "=== DOES pytest.ini EXIST? ==="
+            ls pytest.ini || echo "pytest.ini MISSING!"
+
+      # Step 3: Install minimal deps for debug (only pytest)
+      - run:
+          name: Install Minimal Dependencies for Debug
           command: |
             python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
-            pip install -r requirements.txt
-            pip install pytest-cov   # for coverage reporting
+            pip install pytest pytest-cov
 
-      # Step 4: Cache the venv for next builds
-      - save_cache:
-          paths:
-            - venv
-          key: v1-deps-{{ checksum "requirements.txt" }}
-
-      # Step 5: Decode session cookies from CircleCI secret (for auth tests)
+      # Step 4: DEBUG – Try collection from root
       - run:
-          name: Decode Session Cookies from Secret (if present)
-          command: |
-            if [ -n "$COOKIES_BASE64" ]; then
-              echo "$COOKIES_BASE64" | base64 -d > roadtrippers_cookies.pkl
-              echo "Cookies successfully decoded from CircleCI secret"
-              ls -l roadtrippers_cookies.pkl   # debug: confirm file size
-            else
-              echo "Warning: COOKIES_BASE64 env var not set – auth tests will fail"
-            fi
-
-      # Step 6: Create output directories
-      - run:
-          name: Prepare Output Directories
-          command: |
-            mkdir -p reports screenshots coverage_html
-
-      # Step 7: Debug – list all files in tests/ to confirm presence in CI
-      - run:
-          name: Debug – List Test Files in CI
-          command: |
-            echo "Listing contents of tests/ folder:"
-            ls -la tests/ || echo "tests/ folder not found!"
-            echo ""
-            echo "Files matching *_tests.py:"
-            find tests/ -name "*_tests.py" || echo "No matching files found"
-
-      # Step 8: Debug – Show what pytest would collect (no execution)
-      - run:
-          name: Debug – Test Collection Only
+          name: DEBUG – Pytest Collect from Root
           no_output_timeout: 30m
           command: |
             . venv/bin/activate
-            pytest --collect-only -v
+            pytest --collect-only -v || echo "Collection from root failed"
 
-      # Step 9: Run ALL tests (no markers, no parallelism) – with coverage
+      # Step 5: DEBUG – Force collection from tests/ folder
       - run:
-          name: Run All Tests (Full Suite + Coverage)
-          no_output_timeout: 30m
-          command: |
-            . venv/bin/activate
-            pytest \
-              -v \                            # show every test name & status
-              --reruns 1 \
-              --cov=pages --cov=tests \
-              --cov-report=html:coverage_html/full \
-              --junitxml=reports/junit-full.xml \
-              --html=reports/full-report.html \
-              --self-contained-html
-
-      # Step 10: Store test results (for CircleCI test insights)
-      - store_test_results:
-          path: reports
-
-      # Step 11: Store HTML reports + coverage HTML
-      - store_artifacts:
-          path: reports
-          destination: test-reports
-
-      - store_artifacts:
-          path: coverage_html
-          destination: coverage-reports
-
-      # Step 12: Store failure screenshots
-      - store_artifacts:
-          path: screenshots
-          destination: failure-screenshots
-
-# ============================================================
-# WORKFLOWS – Trigger on every push/PR
-# ============================================================
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - test
+          name: DEBUG

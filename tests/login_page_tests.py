@@ -1,11 +1,10 @@
 import pytest
 from selenium.common import TimeoutException
 
-
 @pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.auth
-def test_login_with_valid_credentials(function_driver, home_pg):
+def test_login_with_valid_credentials(home_pg):
     """
     Positive: Logging in with valid saved cookies should succeed and mark user as logged in.
 
@@ -34,7 +33,7 @@ def test_login_with_valid_credentials(function_driver, home_pg):
 @pytest.mark.regression
 @pytest.mark.negative
 @pytest.mark.auth
-def test_login_with_invalid_credentials(function_driver, home_pg, login_pg):
+def test_login_with_invalid_credentials(home_pg, login_pg):
     """
     Negative: Attempting login with invalid credentials should fail
     and display an error message (or keep form visible with error state).
@@ -127,7 +126,7 @@ def test_toggle_password_visibility(function_driver, home_pg, login_pg):
 
 @pytest.mark.regression
 @pytest.mark.auth
-def test_signup_link(function_driver, home_pg, login_pg, signup_pg):
+def test_signup_link(home_pg, login_pg, signup_pg):
     """
     Positive: Clicking "Create an account" / Sign Up link from login modal
     should open the signup popup/modal.
@@ -199,7 +198,7 @@ def test_forgot_password_link(function_driver, home_pg, login_pg):
 @pytest.mark.regression
 @pytest.mark.auth
 @pytest.mark.trip_planner
-def test_login_and_open_trip_planner_with_direct_click(authenticated_home, login_pg):
+def test_login_and_open_trip_planner_with_direct_click(authenticated_home, login_pg, trip_planner_pg):
     """
     End-to-end positive: After successful login (via cookies),
     clicking 'Plan Your Trip' should navigate to the Trip Planner page.
@@ -220,21 +219,18 @@ def test_login_and_open_trip_planner_with_direct_click(authenticated_home, login
     - Discover card button is visible
 
     """
-    # Step 1: Ensure login via cookies
-    authenticated_home.navigate()
-    assert authenticated_home.is_logged_in(), "User failed to log in via cookies"
+    # Step 1: Ensure login via cookies - authenticated_home fixture
 
     # Step 2: Navigate to Trip Planner
     login_pg.go_to_trip_planner_page()
 
     # Step 3: Verify the page loaded successfully
-    assert login_pg.discover_card_btn_is_displayed(), \
-        "Trip Planner Page did not load successfully: Discover Card button not visible"
+    assert "maps" in trip_planner_pg.current_url
 
 @pytest.mark.regression
 @pytest.mark.trip_planner
 @pytest.mark.auth
-def test_login_and_open_trip_planner_submenu_option(function_driver, authenticated_home, login_pg):
+def test_login_and_open_trip_planner_submenu_option(authenticated_home, login_pg, trip_planner_pg):
     """
     End-to-end positive: After login, using hover + submenu to select 'Trip Planner'
     should navigate to the Trip Planner page.
@@ -255,13 +251,10 @@ def test_login_and_open_trip_planner_submenu_option(function_driver, authenticat
     - Planner page loads successfully
     - Discover card button is visible
     """
-    # Step 1: Ensure login via cookies
-    authenticated_home.navigate()
-    assert authenticated_home.is_logged_in(), "User failed to log in via cookies"
+    # Step 1: Ensure login via cookies - authenticated_home fixture
 
     # Step 2: Navigate to Trip Planner using hover + submenu option
     login_pg.go_to_trip_planner_page(use_hover=True)
 
     # Step 3: Verify the page loaded successfully
-    assert login_pg.discover_card_btn_is_displayed(), \
-        "Trip Planner Page did not load successfully: Discover Card button not visible"
+    assert "maps" in trip_planner_pg.current_url

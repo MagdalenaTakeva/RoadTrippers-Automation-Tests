@@ -1,30 +1,31 @@
-# fixtures/driver_fixtures.py
-
 """
 Driver Fixtures Module
 ------------------------------------------------------------
 
 Purpose:
-    Provides Selenium WebDriver instances configured for:
-    • Local development (visible Chrome)
-    • CI execution (headless Chrome)
-
-Key Design Principles:
-    • Fresh browser per test (function scope)
-    • No Selenium Grid dependency
-    • CI-safe headless configuration
-    • Parallel execution compatible (pytest-xdist)
+    Provides isolated Selenium WebDriver instances for each test function.
+    Ensures:
+    • Fresh browser session per test (no state leakage)
+    • Parallel execution safety (pytest-xdist compatible)
+    • CI-friendly headless mode
+    • Local visible browser for debugging
     • Automatic screenshot capture on failure
-    • Clean and quiet teardown
 
-Environment Detection:
-    CI mode is automatically enabled when:
-        CI=true (set by CircleCI)
+Key Design Choices:
+    • function scope → maximum isolation (no shared cookies/state)
+    • webdriver-manager → auto-downloads compatible ChromeDriver
+    • No Selenium Grid → simplifies CI (no extra services)
+    • CI detection via env var "CI=true" (set by CircleCI)
+    • Screenshot hook → saves image on any test failure (call phase)
 
-Usage:
-    Any test requiring browser interaction should depend on:
-        def test_example(driver):
+Usage in tests:
+    def test_example(driver):  # ← injects fresh Chrome instance
+        driver.get("https://maps.roadtrippers.com")
+        ...
 
+Teardown:
+    • Always attempts driver.quit() (ignores if already closed)
+    • Saves screenshot if test failed
 """
 
 import os
@@ -39,39 +40,42 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # ------------------------------------------------------------
-# Reduce noisy logs from Selenium / urllib3
+# Suppress noisy logs from Selenium & urllib3
+# (prevents console spam in CI and local runs)
 # ------------------------------------------------------------
 logging.getLogger("selenium").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 # ------------------------------------------------------------
-# Primary WebDriver Fixture (Function Scope)
+# Primary WebDriver Fixture – fresh browser per test
 # ------------------------------------------------------------
 @pytest.fixture(scope="function")
-def function_driver():
+def function_driver(request):
     """
-    Provides a fresh Chrome WebDriver instance per test.
+    Core fixture: creates a fresh Chrome WebDriver per test function.
 
-    Behavior:
-        • Local → visible Chrome browser
-        • CI → headless Chrome
+    Features:
+        • Local: visible browser, maximized window
+        • CI: headless, no-sandbox, disable GPU/dev-shm
+        • Common args: disable notifications, infobars, logging
+        • Timeout configurable via env var SELENIUM_TIMEOUT
 
-    Why function scope?
-        Ensures:
-            - No session carry-over
-            - No shared cookies
-            - Parallel execution safety
-            - Deterministic tests
+    Args:
+        request: pytest request object (used for node name in screenshots)
 
-    Returns:
-        Selenium WebDriver instance
+    Yields:
+        WebDriver instance
+
+    Cleanup:
+        Attempts driver.quit()
+        Saves screenshot on failure via pytest hook
     """
 
     chrome_options = Options()
 
     # --------------------------------------------------------
-    # Disable password manager & intrusive Chrome services
+    # Disable intrusive Chrome features (password manager, etc.)
     # --------------------------------------------------------
     prefs = {
         "credentials_enable_service": False,
@@ -81,102 +85,106 @@ def function_driver():
     chrome_options.add_experimental_option("prefs", prefs)
 
     # --------------------------------------------------------
-    # Common browser arguments (clean automation environment)
+    # Common arguments (reduce noise & improve stability)
     # --------------------------------------------------------
     chrome_options.add_argument("--disable-notifications")
     chrome_options.add_argument("--disable-infobars")
-    chrome_options.add_argument("--guest")
-    chrome_options.add_argument("--log-level=3")
+    chrome_options.add_argument("--guest")  # guest mode = no profile sync
+    chrome_options.add_argument("--log-level=3")  # minimal Chrome logs
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-    # Detect CI environment
+    # Detect CI environment (CircleCI sets CI=true)
     is_ci = os.getenv("CI", "false").lower() in ("true", "1", "yes")
 
     if is_ci:
         # ----------------------------------------------------
-        # CI Mode → Headless Chrome
+        # CI-specific: Headless + stability flags
         # ----------------------------------------------------
-        chrome_options.add_argument("--headless=new")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
-
+        chrome_options.add_argument("--headless=new")  # new headless mode (faster)
+        chrome_options.add_argument("--no-sandbox")     # required in containers
+        chrome_options.add_argument("--disable-dev-shm-usage")  # avoid /dev/shm crash
+        chrome_options.add_argument("--disable-gpu")    # headless doesn't need GPU
     else:
         # ----------------------------------------------------
-        # Local Mode → Visible browser
+        # Local: Visible browser for debugging
         # ----------------------------------------------------
         chrome_options.add_argument("--start-maximized")
 
     # --------------------------------------------------------
-    # Initialize WebDriver (local ChromeDriver)
-    # webdriver-manager automatically installs compatible driver
+    # Initialize driver with auto-managed ChromeDriver
     # --------------------------------------------------------
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
-    # Attach default explicit wait timeout to driver instance
-    driver.DEFAULT_WAIT_TIMEOUT = int(
-        os.getenv("SELENIUM_TIMEOUT", "20" if is_ci else "15")
-    )
+    # Attach default timeout to driver instance (used in page objects)
+    driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "20" if is_ci else "15"))
 
     yield driver
 
     # --------------------------------------------------------
-    # Teardown: Always attempt clean quit
+    # Teardown: Clean quit (ignore if already closed)
     # --------------------------------------------------------
     try:
         driver.quit()
     except WebDriverException:
-        # Ignore teardown failures (common if browser already closed)
-        pass
+        pass  # Browser already closed or crashed – safe to ignore
 
 
 # ------------------------------------------------------------
-# Public Driver Alias (Used by Tests & Page Objects)
+# Public alias fixture (used in tests & page objects)
 # ------------------------------------------------------------
 @pytest.fixture(scope="function")
 def driver(function_driver):
     """
-    Alias fixture for dependency clarity.
-
-    Purpose:
-        Acts as the entry point for page object fixtures and tests.
+    Simple alias to make dependency injection clearer.
 
     Example:
-        def test_homepage_loads(driver):
+        def test_homepage(driver):
+            driver.get("https://roadtrippers.com")
 
     Returns:
-        Same WebDriver instance created by function_driver.
+        Same WebDriver from function_driver fixture
     """
     return function_driver
 
 
 # ------------------------------------------------------------
-# Screenshot Capture on Test Failure
+# Automatic Screenshot on Failure (pytest hook)
 # ------------------------------------------------------------
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """
-    Pytest hook that runs after each test phase.
+    Pytest hook: Runs after each test phase (setup/call/teardown).
 
-    If a test fails during execution ("call" phase),
-    and a driver fixture is present, a screenshot is saved.
+    If the test fails during execution ("call" phase),
+    and the test uses the 'driver' fixture,
+    saves a screenshot named after the test.
 
-    Screenshot location:
-        screenshots/<test_name>.png
+    Screenshot location: screenshots/<test_name>.png
 
-    This dramatically improves CI debugging capability.
+    Why this is powerful:
+        • Immediate visual proof of failure state
+        • Essential for CI debugging (download from artifacts)
+        • No need to add screenshot code in every test
     """
 
     outcome = yield
     report = outcome.get_result()
 
-    # Only capture screenshot if test execution failed
+    # Only capture on execution failure (not setup/teardown)
     if report.when == "call" and report.failed:
         driver = item.funcargs.get("driver", None)
 
         if driver:
+            # Ensure screenshots folder exists
             os.makedirs("screenshots", exist_ok=True)
+
+            # Use test node name as filename (safe, unique)
             screenshot_path = f"screenshots/{item.name}.png"
-            driver.save_screenshot(screenshot_path)
+
+            try:
+                driver.save_screenshot(screenshot_path)
+                print(f"Screenshot saved: {screenshot_path}")
+            except Exception as e:
+                print(f"Failed to save screenshot: {e}")

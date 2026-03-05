@@ -1203,7 +1203,7 @@ class BasePage(object):
 
             # Handle all known overlay types
             this_round_dismissed |= self._dismiss_gist_iframes_and_background()
-            this_round_dismissed |= self._dismiss_create_account_modal()
+            # this_round_dismissed |= self._dismiss_create_account_modal()
             this_round_dismissed |= self._dismiss_cookie_banner()
 
             if not this_round_dismissed:
@@ -1269,7 +1269,8 @@ class BasePage(object):
             Uses _try_dismiss_multiple_elements() which handles visibility checks.
         """
         dismissed = False
-        iframes = self.driver.find_elements(By.TAG_NAME, "iframe")
+        # iframes = self.driver.find_elements(By.TAG_NAME, "iframe")
+        iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe.gist-message, iframe.customerio")
 
         for iframe in iframes:
             try:
@@ -1482,7 +1483,7 @@ class BasePage(object):
         locator = (By.CSS_SELECTOR, ".rt-user-img a")
 
         try:
-            link = self.wait_for_element_visibility(locator)
+            link = self.wait_for_element_visibility(locator, timeout=self.SHORT_TIMEOUT)
             href = link.get_attribute("href") or ""
 
             if not href or "/people/" not in href:
@@ -1496,11 +1497,11 @@ class BasePage(object):
                          level="debug")
                 return match
 
-            self.log("Avatar link with /people/ found → appears logged in", level="debug")
+            self.log("Avatar link with /people/ found -> appears logged in", level="debug")
             return True
 
         except (TimeoutException, NoSuchElementException):
-            self.log("No avatar link → not logged in", level="debug")
+            self.log("No avatar link -> not logged in", level="debug")
             return False
         except Exception as e:
             self.log(f"is_logged_in error: {str(e)}", level="warning")
