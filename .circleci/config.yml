@@ -36,14 +36,14 @@ jobs:
             echo "=== Matching *_tests.py files ==="
             find . -name "*_tests.py" 2>/dev/null || echo "No *_tests.py found"
 
-      # 3. Install minimal deps for debug
+      # 3. Install dependencies
       - run:
-          name: Install Minimal Dependencies
+          name: Install Dependencies
           command: |
             python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
-            pip install pytest pytest-cov
+            pip install -r requirements.txt
 
       # 4. DEBUG: Collect from root
       - run:
