@@ -4,6 +4,7 @@ import pickle
 import time
 from datetime import datetime
 from typing import Optional, Union, Tuple
+import base64
 
 from PIL import Image
 from urllib.parse import quote
@@ -1661,47 +1662,69 @@ class BasePage(object):
 
     def login_via_cookies(self, cookie_file="roadtrippers_cookies.pkl", timeout=20):
         """
-        Authenticate by injecting previously saved cookies and refreshing.
+        Authenticate by injecting previously saved cookies and refreshing the page.
+
+        This method supports CI environments by automatically decoding cookies from the
+        COOKIES_BASE64 environment variable if the cookie file does not exist locally.
 
         Args:
-            cookie_file: Path to pickled cookies file (default: "roadtrippers_cookies.pkl")
-            timeout: Wait time for avatar to appear after refresh (default 20s)
+            cookie_file (str): Path to pickled cookies file (default: "roadtrippers_cookies.pkl").
+            timeout (int): Maximum wait time in seconds for the logged-in avatar to appear (default: 20).
 
         Raises:
-            TimeoutException: Avatar not found after refresh
-            InvalidCookieDomainException: Cookie domain mismatch
-            Exception: File or driver errors
+            TimeoutException: If the avatar element is not found after refreshing the page.
+            InvalidCookieDomainException: If a cookie cannot be added due to domain mismatch.
+            RuntimeError: If the cookie file is missing and COOKIES_BASE64 is not set.
+            Exception: For other file or driver-related errors.
 
         Behavior:
-            - Loads cookies from file
-            - Injects into current domain
-            - Refreshes page
-            - Waits for avatar link (logged-in indicator)
+            1. Ensures cookie file exists locally:
+               - Uses local file if present.
+               - If missing, decodes COOKIES_BASE64 from environment variable into cookie_file.
+            2. Opens the Roadtrippers homepage.
+            3. Injects all cookies into the current domain.
+            4. Refreshes the page to activate the session.
+            5. Waits for the user avatar as a logged-in indicator.
         """
+        # Step 1 — Ensure cookie file exists
+        if not os.path.exists(cookie_file):
+            cookies_b64 = os.getenv("COOKIES_BASE64")
+            if not cookies_b64:
+                raise RuntimeError(
+                    f"Cookie file '{cookie_file}' missing and COOKIES_BASE64 env variable not set. "
+                    "Please save session locally or provide the env variable in CI."
+                )
+            # Decode base64 into cookie file
+            with open(cookie_file, "wb") as f:
+                f.write(base64.b64decode(cookies_b64))
+            self.log(f"Decoded cookies from COOKIES_BASE64 into '{cookie_file}'", level="info")
 
+        # Step 2 — Open site before injecting cookies
         self.log("Opening domain before injecting cookies", level="debug")
         self.driver.get("https://roadtrippers.com")
 
-        cookies = pickle.load(open(cookie_file, "rb"))
+        # Step 3 — Load cookies
+        with open(cookie_file, "rb") as f:
+            cookies = pickle.load(f)
 
         self.log(f"Injecting {len(cookies)} cookies", level="debug")
 
         for cookie in cookies:
-            # Selenium requires no expiry float
-            if isinstance(cookie.get("expiry"), float):
+            # Selenium expects integer expiry
+            if "expiry" in cookie:
                 cookie["expiry"] = int(cookie["expiry"])
-
             try:
                 self.driver.add_cookie(cookie)
             except InvalidCookieDomainException:
+                self.log(f"Skipped cookie for domain mismatch: {cookie.get('domain')}", level="warning")
                 continue
 
+        # Step 4 — Refresh page to activate session
         self.log("Refreshing browser to activate session", level="debug")
         self.driver.refresh()
 
-        # Wait for avatar (logged-in indicator)
+        # Step 5 — Wait for avatar (logged-in indicator)
         avatar_locator = (By.CSS_SELECTOR, ".rt-user-img [href*='/people']")
-
         WebDriverWait(self.driver, timeout).until(
             EC.presence_of_element_located(avatar_locator)
         )
