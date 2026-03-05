@@ -1,31 +1,129 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/reference/configuration-reference
+# ============================================================
+# CircleCI Configuration – Selenium + Pytest (Selective Parallelism)
+# ------------------------------------------------------------
+# Strategy:
+#   • Stateless tests (no shared user state) → run in parallel
+#   • Authenticated/stateful tests → run sequentially
+#
+# Rationale:
+#   Prevents race conditions when multiple tests share
+#   a logged-in account or mutate shared data.
+#
+# Outcome:
+#   Stable CI + optimized execution time.
+# ============================================================
+
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
+
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/guides/execution-managed/executor-intro/ & https://circleci.com/docs/reference/configuration-reference/#executor-job
+  test:
     docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
+      # Python image with Chrome & Firefox pre-installed
+      - image: cimg/python:3.11-browsers
 
-    # Add steps to the job
-    # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#steps-overview & https://circleci.com/docs/reference/configuration-reference/#steps
+    working_directory: ~/repo
+
     steps:
-      # Checkout the code as the first step.
+      # --------------------------------------------
+      # Checkout source code
+      # --------------------------------------------
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/guides/orchestrate/workflows/ & https://circleci.com/docs/reference/configuration-reference/#workflows
+      # --------------------------------------------
+      # Restore dependency cache
+      # --------------------------------------------
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "requirements.txt" }}
+            - v1-deps-
+
+      # --------------------------------------------
+      # Install dependencies inside virtualenv
+      # --------------------------------------------
+      - run:
+          name: Install Dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+      # --------------------------------------------
+      # Cache virtual environment
+      # --------------------------------------------
+      - save_cache:
+          paths:
+            - venv
+          key: v1-deps-{{ checksum "requirements.txt" }}
+
+      # --------------------------------------------
+      # Run Stateless Tests (Parallel)
+      # --------------------------------------------
+      - run:
+          name: Run Stateless Tests (Parallel)
+          command: |
+            . venv/bin/activate
+            mkdir -p reports screenshots
+
+            # Execute tests NOT marked as "auth"
+            # -n auto → parallel execution
+            # --reruns 1 → retry once for flake mitigation
+            pytest \
+              -m "not auth" \
+              -n auto \
+              --reruns 1 \
+              --junitxml=reports/junit-stateless.xml \
+              --html=reports/stateless-report.html \
+              --self-contained-html
+
+      # --------------------------------------------
+      # Run Authenticated Tests (Sequential)
+      # --------------------------------------------
+      - run:
+          name: Run Authenticated Tests (Sequential)
+          command: |
+            . venv/bin/activate
+
+            # Execute only tests marked as "auth"
+            # -n 1 → single worker (no parallelism)
+            pytest \
+              -m "auth" \
+              -n 1 \
+              --reruns 1 \
+              --junitxml=reports/junit-auth.xml \
+              --html=reports/auth-report.html \
+              --self-contained-html
+
+      # --------------------------------------------
+      # Store Structured Test Results (JUnit XML)
+      # --------------------------------------------
+      - store_test_results:
+          path: reports
+
+      # --------------------------------------------
+      # Store HTML Reports as Artifacts
+      # --------------------------------------------
+      - store_artifacts:
+          path: reports
+          destination: test-reports
+
+      # --------------------------------------------
+      # Store Failure Screenshots
+      # --------------------------------------------
+      - store_artifacts:
+          path: screenshots
+          destination: failure-screenshots
+
+
+# ============================================================
+# Workflow Definition
+# ------------------------------------------------------------
+# Executes the test job on every branch build / PR.
+# ============================================================
+
 workflows:
-  say-hello-workflow: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  version: 2
+  pull_request_pipeline:
     jobs:
-      - say-hello
+      - test
