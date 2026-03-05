@@ -74,7 +74,7 @@ class TripPlannerPage(BasePage):
         return True
 
     def click_discover_card(self):
-        self.click(self.DISCOVER_CARD_BTN)
+        self.click(self.DISCOVER_CARD_BTN, timeout=BasePage.INTERACTION_TIMEOUT)
 
     def open_road_trip_modal(self):
         """

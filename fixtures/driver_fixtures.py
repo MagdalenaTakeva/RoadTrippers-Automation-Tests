@@ -57,9 +57,10 @@ def function_driver(request):
 
     Features:
         • Local: visible browser, maximized window
-        • CI: headless, no-sandbox, disable GPU/dev-shm
+        • CI: headless, no-sandbox, disable GPU/dev-shm, software WebGL for maps
         • Common args: disable notifications, infobars, logging
         • Timeout configurable via env var SELENIUM_TIMEOUT
+        • Prevents map-render failures in CI by enabling SwiftShader
 
     Args:
         request: pytest request object (used for node name in screenshots)
@@ -99,12 +100,21 @@ def function_driver(request):
 
     if is_ci:
         # ----------------------------------------------------
-        # CI-specific: Headless + stability flags
+        # CI-specific: Headless + stability flags + WebGL
         # ----------------------------------------------------
-        chrome_options.add_argument("--headless=new")  # new headless mode (faster)
-        chrome_options.add_argument("--no-sandbox")     # required in containers
-        chrome_options.add_argument("--disable-dev-shm-usage")  # avoid /dev/shm crash
-        chrome_options.add_argument("--disable-gpu")    # headless doesn't need GPU
+        chrome_options.add_argument("--headless=new")  # new headless mode
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+
+        # -----------------------
+        # WebGL / Maps support
+        # -----------------------
+        # SwiftShader enables software WebGL rendering in headless
+        chrome_options.add_argument("--use-gl=swiftshader")
+        chrome_options.add_argument("--enable-webgl")
+        chrome_options.add_argument("--disable-software-rasterizer")  # sometimes needed
+
     else:
         # ----------------------------------------------------
         # Local: Visible browser for debugging
@@ -121,6 +131,14 @@ def function_driver(request):
     driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "20" if is_ci else "15"))
 
     yield driver
+
+    # --------------------------------------------------------
+    # Teardown: Clean quit (ignore if already closed)
+    # --------------------------------------------------------
+    try:
+        driver.quit()
+    except WebDriverException:
+        pass  # Browser already closed or crashed – safe to ignore
 
     # --------------------------------------------------------
     # Teardown: Clean quit (ignore if already closed)
