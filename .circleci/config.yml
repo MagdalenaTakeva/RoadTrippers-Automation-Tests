@@ -1,20 +1,37 @@
 # ============================================================
-# CircleCI Configuration – Selenium + Pytest (Selective Parallelism)
-# ------------------------------------------------------------
-# Strategy:
-#   • Stateless tests (no shared user state) → run in parallel
-#   • Authenticated/stateful tests → run sequentially
-#
-# Rationale:
-#   Prevents race conditions when multiple tests share
-#   a logged-in account or mutate shared data.
-#
-# Outcome:
-#   Stable CI + optimized execution time.
+# CircleCI Configuration File – Selenium + Pytest Pipeline
 # ============================================================
+"""
+RoadTrippers Automation CI/CD Pipeline
+
+Purpose:
+  Automatically run all UI tests on every push and pull request.
+  Ensures code quality, catches regressions early, and provides
+  reports + screenshots + coverage for debugging and quality.
+
+Key Design Decisions:
+  - Two separate test groups:
+    • Stateless (no auth/login) → fast, parallel execution
+    • Authenticated (needs cookies/session) → sequential to avoid race conditions
+  - Timeout protection: 30 minutes per step (prevents silent hangs)
+  - Verbose output (-v) so we see exactly where tests are stuck
+  - Cookie decoding from secret env var (COOKIES_BASE64) for auth tests
+  - Coverage reporting with pytest-cov → HTML report stored as artifact
+  - Artifacts: HTML test reports + coverage report + failure screenshots
+
+Usage:
+  - Push to main or open PR → pipeline auto-triggers
+  - View results: https://app.circleci.com/pipelines/github/MagdalenaTakeva/RoadTrippers-Automation-Tests
+
+Coverage:
+  - Generated via pytest-cov
+  - HTML report saved in coverage_html/
+  - Download from Artifacts tab after build
+
+Author: Magdalena Takeva (for interview demo – March 2026)
+"""
 
 version: 2.1
-
 
 jobs:
   test:
@@ -25,105 +42,113 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      # --------------------------------------------
-      # Checkout source code
-      # --------------------------------------------
+      # 1. Checkout your code from GitHub
       - checkout
 
-      # --------------------------------------------
-      # Restore dependency cache
-      # --------------------------------------------
+      # 2. Restore dependency cache to speed up builds
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "requirements.txt" }}
             - v1-deps-
 
-      # --------------------------------------------
-      # Install dependencies inside virtualenv
-      # --------------------------------------------
+      # 3. Create venv + install all packages (including pytest-cov)
       - run:
-          name: Install Dependencies
+          name: Install Python Dependencies
           command: |
             python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
+            # Ensure pytest-cov is installed (add if missing from requirements.txt)
+            pip install pytest-cov
 
-      # --------------------------------------------
-      # Cache virtual environment
-      # --------------------------------------------
+      # 4. Save the venv cache for next build
       - save_cache:
           paths:
             - venv
           key: v1-deps-{{ checksum "requirements.txt" }}
 
-      # --------------------------------------------
-      # Run Stateless Tests (Parallel)
-      # --------------------------------------------
+      # 5. Decode cookies from secret (for auth tests)
       - run:
-          name: Run Stateless Tests (Parallel)
+          name: Decode Session Cookies from Secret (if present)
+          command: |
+            if [ -n "$COOKIES_BASE64" ]; then
+              echo "$COOKIES_BASE64" | base64 -d > roadtrippers_cookies.pkl
+              echo "Successfully decoded cookies from CircleCI secret"
+              ls -l roadtrippers_cookies.pkl  # debug: show file size
+            else
+              echo "Warning: COOKIES_BASE64 env var not set – auth tests will fail"
+            fi
+
+      # 6. Create output directories
+      - run:
+          name: Create Reports, Screenshots & Coverage Folders
+          command: |
+            mkdir -p reports screenshots coverage_html
+
+      # ============================================================
+      # JOB: Stateless Tests – fast, parallel, with coverage
+      # ============================================================
+      - run:
+          name: Run Stateless Tests (Parallel + Coverage)
+          no_output_timeout: 30m
           command: |
             . venv/bin/activate
-            mkdir -p reports screenshots
-
-            # Execute tests NOT marked as "auth"
-            # -n auto → parallel execution
-            # --reruns 1 → retry once for flake mitigation
             pytest \
               -m "not auth" \
-              -n auto \
+              -n 2 \
+              -v \
               --reruns 1 \
+              --cov=pages --cov=tests --cov-report=html:coverage_html/stateless \
               --junitxml=reports/junit-stateless.xml \
               --html=reports/stateless-report.html \
               --self-contained-html
 
-      # --------------------------------------------
-      # Run Authenticated Tests (Sequential)
-      # --------------------------------------------
+      # ============================================================
+      # JOB: Authenticated Tests – sequential, with coverage
+      # ============================================================
       - run:
-          name: Run Authenticated Tests (Sequential)
+          name: Run Authenticated Tests (Sequential + Coverage)
+          no_output_timeout: 30m
           command: |
             . venv/bin/activate
-
-            # Execute only tests marked as "auth"
-            # -n 1 → single worker (no parallelism)
             pytest \
               -m "auth" \
               -n 1 \
+              -v \
               --reruns 1 \
+              --cov=pages --cov=tests --cov-report=html:coverage_html/auth \
               --junitxml=reports/junit-auth.xml \
               --html=reports/auth-report.html \
               --self-contained-html
 
-      # --------------------------------------------
-      # Store Structured Test Results (JUnit XML)
-      # --------------------------------------------
+      # ============================================================
+      # STORE RESULTS & ARTIFACTS
+      # ============================================================
+
+      # Store JUnit XML for test summary
       - store_test_results:
           path: reports
 
-      # --------------------------------------------
-      # Store HTML Reports as Artifacts
-      # --------------------------------------------
+      # Store HTML test reports + coverage HTML report
       - store_artifacts:
           path: reports
           destination: test-reports
 
-      # --------------------------------------------
-      # Store Failure Screenshots
-      # --------------------------------------------
+      - store_artifacts:
+          path: coverage_html
+          destination: coverage-reports
+
       - store_artifacts:
           path: screenshots
           destination: failure-screenshots
 
-
 # ============================================================
-# Workflow Definition
-# ------------------------------------------------------------
-# Executes the test job on every branch build / PR.
+# WORKFLOWS – Run on every push/PR
 # ============================================================
 
 workflows:
   version: 2
-  pull_request_pipeline:
+  pull_request_and_push_pipeline:
     jobs:
       - test
