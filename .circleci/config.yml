@@ -1,20 +1,3 @@
-# ============================================================
-# CircleCI Configuration – Selenium + Pytest Pipeline
-# ============================================================
-# Debug-focused version to fix "collected 0 items" issue
-# Goal: Prove if tests/ folder and *_tests.py files arrive in CI workspace
-# If files are missing → checkout problem
-# If files present but 0 collected → pytest discovery issue
-#
-# Steps:
-# 1. Force full checkout (no shallow clone)
-# 2. Debug workspace: list all files, check tests/ existence
-# 3. Debug collection: run --collect-only from root
-# 4. Debug forced collection: run --collect-only from tests/
-#
-# Author: Magdalena Takeva – interview project (March 2026)
-# ============================================================
-
 version: 2.1
 
 jobs:
@@ -25,48 +8,44 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      # Step 1: Force full checkout (fetch all history, no shallow)
+      # 1. Force full checkout (no shallow clone)
       - checkout:
           fetch_depth: 0
 
-      # Step 2: DEBUG – Prove files arrived in CI workspace
+      # 2. DEBUG: Prove files arrived in CI workspace
       - run:
-          name: DEBUG – Workspace & File Presence
+          name: DEBUG – Confirm tests folder arrived
           command: |
-            echo "=== CURRENT WORKING DIRECTORY ==="
+            echo "=== Current working directory ==="
             pwd
             echo ""
-            echo "=== GIT TRACKED FILES (git ls-files | grep tests) ==="
+            echo "=== Git tracked files with tests ==="
             git ls-files | grep tests || echo "No tests files tracked!"
             echo ""
-            echo "=== FULL RECURSIVE FILE LIST (find . | grep tests) ==="
-            find . -type f | grep tests || echo "No tests files found in workspace"
+            echo "=== Full recursive file list with tests ==="
+            find . -type f | grep tests || echo "No tests files found"
             echo ""
-            echo "=== DOES tests/ FOLDER EXIST? ==="
+            echo "=== tests/ folder exists? ==="
             if [ -d "tests" ]; then
               echo "YES - tests/ exists"
-              echo "Contents of tests/:"
               ls -la tests/
             else
               echo "NO - tests/ MISSING after checkout!"
             fi
             echo ""
-            echo "=== FILES MATCHING *_tests.py ==="
-            find . -name "*_tests.py" 2>/dev/null || echo "No *_tests.py files found"
-            echo ""
-            echo "=== DOES pytest.ini EXIST? ==="
-            ls pytest.ini || echo "pytest.ini MISSING!"
+            echo "=== Matching *_tests.py files ==="
+            find . -name "*_tests.py" 2>/dev/null || echo "No *_tests.py found"
 
-      # Step 3: Install minimal deps for debug (only pytest)
+      # 3. Install minimal deps for debug
       - run:
-          name: Install Minimal Dependencies for Debug
+          name: Install Minimal Dependencies
           command: |
             python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
             pip install pytest pytest-cov
 
-      # Step 4: DEBUG – Try collection from root
+      # 4. DEBUG: Collect from root
       - run:
           name: DEBUG – Pytest Collect from Root
           no_output_timeout: 30m
@@ -74,6 +53,44 @@ jobs:
             . venv/bin/activate
             pytest --collect-only -v || echo "Collection from root failed"
 
-      # Step 5: DEBUG – Force collection from tests/ folder
+      # 5. DEBUG: Force collect from tests/
       - run:
-          name: DEBUG
+          name: DEBUG – Pytest Collect from tests/ folder
+          no_output_timeout: 30m
+          command: |
+            . venv/bin/activate
+            pytest tests/ --collect-only -v || echo "Collection from tests/ failed"
+
+      # 6. Run full test suite (uncomment when debug succeeds)
+      - run:
+          name: Run All Tests (Full Suite + Coverage)
+          no_output_timeout: 30m
+          command: |
+            . venv/bin/activate
+            pytest \
+              -v \
+              --reruns 1 \
+              --cov=pages --cov=tests \
+              --cov-report=html:coverage_html/full \
+              --junitxml=reports/junit.xml \
+              --html=reports/report.html \
+              --self-contained-html
+
+      # Store artifacts
+      - store_artifacts:
+          path: coverage_html
+          destination: coverage
+
+      - store_artifacts:
+          path: screenshots
+          destination: screenshots
+
+      - store_artifacts:
+          path: reports
+          destination: reports
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test
