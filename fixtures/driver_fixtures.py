@@ -105,7 +105,7 @@ def function_driver(request):
         chrome_options.add_argument("--headless=new")  # new headless mode
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
+        # chrome_options.add_argument("--disable-gpu")
 
         # -----------------------
         # WebGL / Maps support
@@ -113,7 +113,8 @@ def function_driver(request):
         # SwiftShader enables software WebGL rendering in headless
         chrome_options.add_argument("--use-gl=swiftshader")
         chrome_options.add_argument("--enable-webgl")
-        chrome_options.add_argument("--disable-software-rasterizer")  # sometimes needed
+        chrome_options.add_argument("--enable-webgl2-compute-context")
+        chrome_options.add_argument("--ignore-gpu-blocklist")
 
     else:
         # ----------------------------------------------------
@@ -131,14 +132,6 @@ def function_driver(request):
     driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "20" if is_ci else "15"))
 
     yield driver
-
-    # --------------------------------------------------------
-    # Teardown: Clean quit (ignore if already closed)
-    # --------------------------------------------------------
-    try:
-        driver.quit()
-    except WebDriverException:
-        pass  # Browser already closed or crashed – safe to ignore
 
     # --------------------------------------------------------
     # Teardown: Clean quit (ignore if already closed)
