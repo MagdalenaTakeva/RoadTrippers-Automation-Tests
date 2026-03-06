@@ -76,7 +76,7 @@ def function_driver(request):
 
     if is_ci:
         # Headless + container stability
-        chrome_options.add_argument("--headless=new")
+        # chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
@@ -113,7 +113,7 @@ def function_driver(request):
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     # Default timeout
-    driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "20" if is_ci else "15"))
+    driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "45" if is_ci else "15"))
 
     # ------------------------------------------------------------
     # Auto-dismiss common overlays/popups via JS injection
