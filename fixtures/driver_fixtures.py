@@ -76,7 +76,7 @@ def function_driver(request):
 
     if is_ci:
         # Headless + container stability
-        # chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
