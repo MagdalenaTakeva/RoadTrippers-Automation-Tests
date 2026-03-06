@@ -60,7 +60,7 @@ def function_driver(request):
         • CI: headless, no-sandbox, disable GPU/dev-shm, software WebGL for maps
         • Common args: disable notifications, infobars, logging
         • Timeout configurable via env var SELENIUM_TIMEOUT
-        • Prevents map-render failures in CI by enabling SwiftShader
+        • Prevents map-render failures in CI by enabling ANGLE + SwiftShader
 
     Args:
         request: pytest request object (used for node name in screenshots)
@@ -100,22 +100,31 @@ def function_driver(request):
 
     if is_ci:
         # ----------------------------------------------------
-        # CI-specific: Headless + stability flags + WebGL
+        # CI-specific: Headless + stability flags
         # ----------------------------------------------------
-        chrome_options.add_argument("--headless=new")  # new headless mode
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        # chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--headless=new")           # Modern headless mode
+        chrome_options.add_argument("--no-sandbox")             # Required in containers
+        chrome_options.add_argument("--disable-dev-shm-usage")  # Avoid /dev/shm crash
 
-        # -----------------------
-        # WebGL / Maps support
-        # -----------------------
-        # SwiftShader enables software WebGL rendering in headless
-        chrome_options.add_argument("--use-gl=swiftshader")
+        # ----------------------------------------------------
+        # Force software WebGL rendering for Mapbox (critical)
+        # ----------------------------------------------------
+        # ANGLE backend — most reliable for Mapbox in headless CI
+        chrome_options.add_argument("--use-angle=gl")
+        chrome_options.add_argument("--use-gl=angle")
+
+        # Enable WebGL explicitly
         chrome_options.add_argument("--enable-webgl")
-        chrome_options.add_argument("--enable-webgl2-compute-context")
+
+        # Bypass GPU blocklist (Chrome often disables WebGL in containers)
         chrome_options.add_argument("--ignore-gpu-blocklist")
-        chrome_options.add_argument("--disable-gpu-sandbox")
+
+        # Disable features that interfere with software WebGL
+        chrome_options.add_argument("--disable-features=UseSkiaGraphite")
+        chrome_options.add_argument("--disable-gpu-driver-bug-workarounds")
+
+        # SwiftShader as fallback if ANGLE fails
+        chrome_options.add_argument("--use-gl=swiftshader")
 
     else:
         # ----------------------------------------------------
