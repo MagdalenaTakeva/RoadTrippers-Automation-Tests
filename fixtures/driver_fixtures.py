@@ -52,32 +52,10 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ------------------------------------------------------------
 @pytest.fixture(scope="function")
 def function_driver(request):
-    """
-    Core fixture: creates a fresh Chrome WebDriver per test function.
-
-    Features:
-        • Local: visible browser, maximized window
-        • CI: headless, no-sandbox, disable GPU/dev-shm, software WebGL for maps
-        • Common args: disable notifications, infobars, logging
-        • Timeout configurable via env var SELENIUM_TIMEOUT
-        • Prevents map-render failures in CI by enabling ANGLE + SwiftShader
-
-    Args:
-        request: pytest request object (used for node name in screenshots)
-
-    Yields:
-        WebDriver instance
-
-    Cleanup:
-        Attempts driver.quit()
-        Saves screenshot on failure via pytest hook
-    """
-
+    """Core fixture: fresh Chrome WebDriver per test function."""
     chrome_options = Options()
 
-    # --------------------------------------------------------
-    # Disable intrusive Chrome features (password manager, etc.)
-    # --------------------------------------------------------
+    # Disable intrusive Chrome features
     prefs = {
         "credentials_enable_service": False,
         "profile.password_manager_enabled": False,
@@ -85,71 +63,107 @@ def function_driver(request):
     }
     chrome_options.add_experimental_option("prefs", prefs)
 
-    # --------------------------------------------------------
-    # Common arguments (reduce noise & improve stability)
-    # --------------------------------------------------------
+    # Common args
     chrome_options.add_argument("--disable-notifications")
     chrome_options.add_argument("--disable-infobars")
-    chrome_options.add_argument("--guest")  # guest mode = no profile sync
-    chrome_options.add_argument("--log-level=3")  # minimal Chrome logs
+    chrome_options.add_argument("--guest")
+    chrome_options.add_argument("--log-level=3")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-    # Detect CI environment (CircleCI sets CI=true)
+    # Detect CI environment
     is_ci = os.getenv("CI", "false").lower() in ("true", "1", "yes")
 
     if is_ci:
-        # ----------------------------------------------------
-        # CI-specific: Headless + stability flags
-        # ----------------------------------------------------
-        chrome_options.add_argument("--headless=new")           # Modern headless mode
-        chrome_options.add_argument("--no-sandbox")             # Required in containers
-        chrome_options.add_argument("--disable-dev-shm-usage")  # Avoid /dev/shm crash
+        # Headless + container stability
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
 
-        # ----------------------------------------------------
-        # Force software WebGL rendering for Mapbox (critical)
-        # ----------------------------------------------------
-        # ANGLE backend — most reliable for Mapbox in headless CI
+        # Force ANGLE backend for WebGL
         chrome_options.add_argument("--use-angle=gl")
         chrome_options.add_argument("--use-gl=angle")
-
-        # Enable WebGL explicitly
         chrome_options.add_argument("--enable-webgl")
-
-        # Bypass GPU blocklist (Chrome often disables WebGL in containers)
         chrome_options.add_argument("--ignore-gpu-blocklist")
 
-        # Disable features that interfere with software WebGL
+        # Disable interfering features
         chrome_options.add_argument("--disable-features=UseSkiaGraphite")
         chrome_options.add_argument("--disable-gpu-driver-bug-workarounds")
 
-        # SwiftShader as fallback if ANGLE fails
+        # SwiftShader fallback
         chrome_options.add_argument("--use-gl=swiftshader")
 
+        # Extra stability flags for Mapbox
+        chrome_options.add_argument("--enable-webgl2-compute-context")
+        chrome_options.add_argument("--disable-gpu-sandbox")
+        chrome_options.add_argument("--disable-software-rasterizer")
+        chrome_options.add_argument("--disable-gpu-compositing")
+
+        # Make headless browser look less headless
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+        )
     else:
-        # ----------------------------------------------------
-        # Local: Visible browser for debugging
-        # ----------------------------------------------------
         chrome_options.add_argument("--start-maximized")
 
-    # --------------------------------------------------------
-    # Initialize driver with auto-managed ChromeDriver
-    # --------------------------------------------------------
+    # Initialize driver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
-    # Attach default timeout to driver instance (used in page objects)
+    # Default timeout
     driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "20" if is_ci else "15"))
+
+    # ------------------------------------------------------------
+    # Auto-dismiss common overlays/popups via JS injection
+    # Runs on every new page load (Mapbox, cookie banners, modals, etc.)
+    # ------------------------------------------------------------
+    dismiss_overlays_js = """
+    (function() {
+        // Remove known overlay/pop-up containers
+        const selectors = [
+            '.mapboxgl-popup', '.mapboxgl-overlay', '.onboarding-modal', '.cookie-consent',
+            '.modal-backdrop', '.gist-overlay', '[id*="onetrust"]', '[class*="cookie"]',
+            '[role="dialog"]', '[aria-modal="true"]', '[data-sweetchuck-id*="modal"]',
+            '.welcome-tour', '.introjs-overlay', '.rt-onboarding'
+        ];
+        document.querySelectorAll(selectors.join(',')).forEach(el => {
+            el.remove();
+        });
+
+        // Click visible close/dismiss/accept buttons
+        const buttons = document.querySelectorAll(
+            'button.close, button[aria-label*="close"], button[data-dismiss], ' +
+            '[data-sweetchuck-id*="close"], #onetrust-accept-btn-handler, ' +
+            '.dismiss, .accept, .agree, .got-it, .continue, .ok, [type="button"][text*="Accept"], ' +
+            '[text*="Close"], [text*="Got it"], [text*="Continue"]'
+        );
+        buttons.forEach(btn => {
+            if (btn.offsetParent !== null && !btn.disabled) {
+                btn.click();
+            }
+        });
+
+        // Force scrollable body
+        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+        document.body.style.pointerEvents = 'auto';
+    })();
+    """
+
+    # Inject JS to run on every new document/page load
+    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+        "source": dismiss_overlays_js
+    })
 
     yield driver
 
-    # --------------------------------------------------------
-    # Teardown: Clean quit (ignore if already closed)
-    # --------------------------------------------------------
+    # Teardown
     try:
         driver.quit()
     except WebDriverException:
-        pass  # Browser already closed or crashed – safe to ignore
+        pass
 
 
 # ------------------------------------------------------------
