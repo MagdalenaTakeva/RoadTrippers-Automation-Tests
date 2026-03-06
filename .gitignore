@@ -46,3 +46,6 @@ Thumbs.db
 *.swo
 *~.coverage
 .coverage.*
+logs.log
+.coverage
+cookies_base64.txt

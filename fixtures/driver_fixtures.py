@@ -115,6 +115,7 @@ def function_driver(request):
         chrome_options.add_argument("--enable-webgl")
         chrome_options.add_argument("--enable-webgl2-compute-context")
         chrome_options.add_argument("--ignore-gpu-blocklist")
+        chrome_options.add_argument("--disable-gpu-sandbox")
 
     else:
         # ----------------------------------------------------
