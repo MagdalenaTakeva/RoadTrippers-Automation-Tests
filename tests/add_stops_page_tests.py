@@ -2,10 +2,12 @@ import pytest
 
 @pytest.mark.regression
 @pytest.mark.add_stops
+@pytest.mark.trip_planner
 @pytest.mark.limit
 @pytest.mark.auth
 def test_cannot_add_more_than_15_stops(
     my_trips_pg,
+    stabilize_map,
     trip_planner_pg,
     cleanup_trips
 
@@ -73,8 +75,9 @@ def test_cannot_add_more_than_15_stops(
 @pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.add_stops
+@pytest.mark.trip_planner
 @pytest.mark.auth
-def test_add_stop(my_trips_pg, trip_planner_pg, cleanup_trips):
+def test_add_stop(my_trips_pg, stabilize_map, trip_planner_pg, cleanup_trips):
     """
         Positive: Adding a single stop to a newly created trip should succeed
         and update the stop count and waypoint list correctly.
@@ -120,7 +123,7 @@ def test_add_stop(my_trips_pg, trip_planner_pg, cleanup_trips):
 @pytest.mark.add_stops
 @pytest.mark.trip_planner
 @pytest.mark.auth
-def test_happy_path_trip_creation(my_trips_pg, trip_planner_pg, cleanup_trips):
+def test_happy_path_trip_creation(my_trips_pg, stabilize_map, trip_planner_pg, cleanup_trips):
     """
        Positive end-to-end: Full happy path of creating a trip, adding a stop,
        launching it, and verifying the generated itinerary waypoints.

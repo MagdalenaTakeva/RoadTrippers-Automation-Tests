@@ -51,115 +51,59 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # Primary WebDriver Fixture – fresh browser per test
 # ------------------------------------------------------------
 @pytest.fixture(scope="function")
-def function_driver(request):
-    """Core fixture: fresh Chrome WebDriver per test function."""
+def function_driver():
     chrome_options = Options()
 
-    # Disable intrusive Chrome features
     prefs = {
         "credentials_enable_service": False,
         "profile.password_manager_enabled": False,
         "profile.password_manager_leak_detection": False,
     }
+
     chrome_options.add_experimental_option("prefs", prefs)
 
-    # Common args
     chrome_options.add_argument("--disable-notifications")
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--guest")
     chrome_options.add_argument("--log-level=3")
     chrome_options.add_argument("--window-size=1920,1080")
+
     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-    # Detect CI environment
     is_ci = os.getenv("CI", "false").lower() in ("true", "1", "yes")
 
     if is_ci:
-        # Headless + container stability
         chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
 
-        # Force ANGLE backend for WebGL
         chrome_options.add_argument("--use-angle=gl")
         chrome_options.add_argument("--use-gl=angle")
         chrome_options.add_argument("--enable-webgl")
         chrome_options.add_argument("--ignore-gpu-blocklist")
 
-        # Disable interfering features
         chrome_options.add_argument("--disable-features=UseSkiaGraphite")
         chrome_options.add_argument("--disable-gpu-driver-bug-workarounds")
 
-        # SwiftShader fallback
         chrome_options.add_argument("--use-gl=swiftshader")
 
-        # Extra stability flags for Mapbox
-        chrome_options.add_argument("--enable-webgl2-compute-context")
-        chrome_options.add_argument("--disable-gpu-sandbox")
-        chrome_options.add_argument("--disable-software-rasterizer")
-        chrome_options.add_argument("--disable-gpu-compositing")
-
-        # Make headless browser look less headless
-        chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument(
-            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+            "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
         )
+
     else:
         chrome_options.add_argument("--start-maximized")
 
-    # Initialize driver
     service = Service(ChromeDriverManager().install())
+
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
-    # Default timeout
-    driver.DEFAULT_WAIT_TIMEOUT = int(os.getenv("SELENIUM_TIMEOUT", "45" if is_ci else "15"))
-
-    # ------------------------------------------------------------
-    # Auto-dismiss common overlays/popups via JS injection
-    # Runs on every new page load (Mapbox, cookie banners, modals, etc.)
-    # ------------------------------------------------------------
-    dismiss_overlays_js = """
-    (function() {
-        // Remove known overlay/pop-up containers
-        const selectors = [
-            '.mapboxgl-popup', '.mapboxgl-overlay', '.onboarding-modal', '.cookie-consent',
-            '.modal-backdrop', '.gist-overlay', '[id*="onetrust"]', '[class*="cookie"]',
-            '[role="dialog"]', '[aria-modal="true"]', '[data-sweetchuck-id*="modal"]',
-            '.welcome-tour', '.introjs-overlay', '.rt-onboarding'
-        ];
-        document.querySelectorAll(selectors.join(',')).forEach(el => {
-            el.remove();
-        });
-
-        // Click visible close/dismiss/accept buttons
-        const buttons = document.querySelectorAll(
-            'button.close, button[aria-label*="close"], button[data-dismiss], ' +
-            '[data-sweetchuck-id*="close"], #onetrust-accept-btn-handler, ' +
-            '.dismiss, .accept, .agree, .got-it, .continue, .ok, [type="button"][text*="Accept"], ' +
-            '[text*="Close"], [text*="Got it"], [text*="Continue"]'
-        );
-        buttons.forEach(btn => {
-            if (btn.offsetParent !== null && !btn.disabled) {
-                btn.click();
-            }
-        });
-
-        // Force scrollable body
-        document.body.style.overflow = 'auto';
-        document.documentElement.style.overflow = 'auto';
-        document.body.style.pointerEvents = 'auto';
-    })();
-    """
-
-    # Inject JS to run on every new document/page load
-    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-        "source": dismiss_overlays_js
-    })
+    driver.DEFAULT_WAIT_TIMEOUT = int(
+        os.getenv("SELENIUM_TIMEOUT", "45" if is_ci else "15")
+    )
 
     yield driver
 
-    # Teardown
     try:
         driver.quit()
     except WebDriverException:

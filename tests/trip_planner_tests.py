@@ -4,7 +4,7 @@ import pytest
 @pytest.mark.regression
 @pytest.mark.trip_planner
 @pytest.mark.auth
-def test_trip_planner_page_load(authenticated_home, login_pg, trip_planner_pg):
+def test_trip_planner_page_load(authenticated_home, stabilize_map, login_pg, trip_planner_pg):
     """
        Positive: After login, navigating to the Trip Planner page should load successfully.
 
@@ -33,7 +33,7 @@ def test_trip_planner_page_load(authenticated_home, login_pg, trip_planner_pg):
 @pytest.mark.regression
 @pytest.mark.trip_planner
 @pytest.mark.auth
-def test_create_quick_launch_trip(my_trips_pg, trip_planner_pg, cleanup_trips):
+def test_create_quick_launch_trip(my_trips_pg, stabilize_map, trip_planner_pg, cleanup_trips):
     """
         Positive: Creating a trip using Quick Launch mode should succeed
         and close the creation modal.
@@ -71,7 +71,7 @@ def test_create_quick_launch_trip(my_trips_pg, trip_planner_pg, cleanup_trips):
 @pytest.mark.regression
 @pytest.mark.trip_planner
 @pytest.mark.auth
-def test_create_autopilot_trip(my_trips_pg, trip_planner_pg, cleanup_trips):
+def test_create_autopilot_trip(my_trips_pg, stabilize_map, trip_planner_pg, cleanup_trips):
     """
        Positive end-to-end: Creating a trip using Autopilot mode should succeed,
        close the modal, and redirect to the autopilot view or planner.
@@ -114,7 +114,7 @@ def test_create_autopilot_trip(my_trips_pg, trip_planner_pg, cleanup_trips):
 @pytest.mark.regression
 @pytest.mark.trip_planner
 @pytest.mark.auth
-def test_discover_card_navigation(function_driver, authenticated_home, login_pg, trip_planner_pg):
+def test_discover_card_navigation(function_driver, stabilize_map, authenticated_home, login_pg, trip_planner_pg):
     """
        Positive: Clicking the Discover Card on the Trip Planner page
        should open the road trip creation modal.
